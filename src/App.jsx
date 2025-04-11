@@ -3,6 +3,7 @@ import './App.css'
 
 function App() {
 
+  // Creació dels primers components dinàmics
   const titol = "Benvinguts al curs"
   const subtitol = "React & Firebase"
 
