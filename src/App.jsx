@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import './App.css'
-import logoReact from './assets/react.svg'
+import Titol from './components/titol/Titol'
 
 //1. clic event
 //2. Estats
@@ -19,7 +19,9 @@ function App() {
     {concepte: "excursió", quantia: 150.27, pagatPer:"Anna", id:3}
   ])
 
-  console.log(mostrarDespeses)
+  //console.log(mostrarDespeses)
+
+  const subtitol = "React & Firebase!!"
 
   const handleClick = (id) => {
     // console.log(id)
@@ -31,6 +33,7 @@ function App() {
 
   return (
     <div>
+      <Titol titol="Benvinguts al curs!!" subtitol={subtitol} />
      {  !mostrarDespeses && 
        (
           <div>
