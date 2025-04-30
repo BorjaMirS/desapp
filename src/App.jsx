@@ -1,8 +1,9 @@
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import Titol from './components/titol/Titol'
-
+import Modal from './components/modal/Modal'
+//Importam React a la primera linea per emprar fragment
 //1. clic event
 //2. Estats
 // useState és un hook
@@ -13,6 +14,7 @@ function App() {
   // Creació dels primers components dinàmics
   //let titol = "Benvinguts al curs"
   const [mostrarDespeses, setMostrarDespeses] = useState(true)
+  const [mostraModal, setMostraModal] = useState(false)
   const [despeses, setDespeses] = useState([
     {concepte: "dinar", quantia: 50.67, pagatPer:"Pere", id:1},
     {concepte: "sopar", quantia: 33.33, pagatPer:"Toni", id:2},
@@ -20,6 +22,7 @@ function App() {
   ])
 
   //console.log(mostrarDespeses)
+  console.log(mostraModal)
 
   const subtitol = "React & Firebase!!"
 
@@ -31,6 +34,11 @@ function App() {
     })
   }
 
+  const handleTancar = () => {
+    setMostraModal(false)
+  }
+
+  
   return (
     <div>
       <Titol titol="Benvinguts al curs!!" subtitol={subtitol} />
@@ -51,13 +59,23 @@ function App() {
       { 
       //Index és un atribut per defecte de map
         mostrarDespeses && despeses.map((despesa, index) => (
-            <div key={despesa.id}>
+          //Ja que hem importat React a la primera línea per emprar fragment, es pot emprar React.Fragment o només Fragment (forma de no haver de crear un component div per incloure la property key per React)
+            <React.Fragment key={despesa.id}>
               <h2>{index + 1} - {despesa.concepte} </h2>
               <button onClick={ () => handleClick(despesa.id)}>Eliminar despesa</button>
-            </div> 
+            </React.Fragment> 
           )
         )
       }
+      { mostraModal && <Modal handleTancar = {handleTancar}>  
+          <h2>Component Modal</h2>
+          <p>Ara canviarem el contingut</p>
+          <p>Hola</p>
+      </Modal>  }
+      <div>
+        <button onClick={ () => setMostraModal(true)}> Mostrar modal </button>
+      </div>
+
     </div>
   )
 }
