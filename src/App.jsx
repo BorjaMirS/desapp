@@ -61,15 +61,14 @@ function App() {
       //Index és un atribut per defecte de map
         mostrarDespeses && <DespesesLlista despeses={despeses} handleClick={handleClick}/>
       }
-      { mostraModal && <Modal handleTancar = {handleTancar}>  
+      { mostraModal && <Modal handleTancar = {handleTancar} esVorera={true}>  
           <h2>Component Modal</h2>
           <p>Ara canviarem el contingut</p>
           <p>Hola</p>
       </Modal>  }
       <div>
-        <button onClick={ () => setMostraModal(true)}> Mostrar modal </button>
+        <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
       </div>
-
     </div>
   )
 }
