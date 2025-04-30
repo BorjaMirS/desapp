@@ -3,7 +3,7 @@ import './DespesaForm.css'
 
 export default function DespesaForm() {
   return (
-    <form>
+    <form className="despesa-form">
         <label>
             <span>Concepte</span>  
             <input type="text" />          

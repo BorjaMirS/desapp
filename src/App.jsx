@@ -4,6 +4,7 @@ import './App.css'
 import Titol from './components/titol/Titol'
 import Modal from './components/modal/Modal'
 import DespesesLlista from './components/despesesllista/despesesllista'
+import DespesaForm from './components/despesaForm/DespesaForm'
 //Importam React a la primera linea per emprar fragment
 //1. clic event
 //2. Estats
@@ -61,10 +62,8 @@ function App() {
       //Index és un atribut per defecte de map
         mostrarDespeses && <DespesesLlista despeses={despeses} handleClick={handleClick}/>
       }
-      { mostraModal && <Modal handleTancar = {handleTancar} esVorera={true}>  
-          <h2>Component Modal</h2>
-          <p>Ara canviarem el contingut</p>
-          <p>Hola</p>
+      { mostraModal && <Modal handleTancar = {handleTancar}>  
+          <DespesaForm />
       </Modal>  }
       <div>
         <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
