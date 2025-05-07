@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import Titol from './components/titol/Titol'
 import Modal from './components/modal/Modal'
@@ -22,6 +22,8 @@ function App() {
     {concepte: "sopar", quantia: 9.33, pagatPer:"Toni", id:2},
     {concepte: "excursió", quantia: 8.27, pagatPer:"Anna", id:3}
   ])
+
+  const [filtrarPerQuantia, setFiltrarPerQuantia] = useState(false)
     
 
   //const [despeses, setDespeses] = useState([])
@@ -33,9 +35,18 @@ function App() {
 
   const subtitol = "React & Firebase!!"
 
-  setDespeses((despesesPrevies) => {
-    return despesesPrevies.filter((despesa) => despesa.quantia > 10.00)
-  })
+
+
+  useEffect(() => {
+    setDespeses((despesesPrevies) => {
+      if (filtrarPerQuantia)
+        return despesesPrevies.filter((despesa) => despesa.quantia > 10.00)
+      else 
+        return despesesPrevies
+    })
+  }
+   , [filtrarPerQuantia]
+  )
 
   const afegirDespesa = (despesa) => {
       setDespeses((despesesPrevies) => {
@@ -85,17 +96,9 @@ function App() {
       <div>
         <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
       </div>
-      {/*
       <div>
-        <button onClick={ () => {
-          setDespeses((despesesPrevies) => {
-            return despesesPrevies.filter((despesa) => despesa.quantia > 10.00)
-          }
-
-          )
-        } }>Filtrar</button>
+        <button onClick={() => setFiltrarPerQuantia(true)}>Filtrar</button>
       </div>
-      */}
     </div>
   )
 }
