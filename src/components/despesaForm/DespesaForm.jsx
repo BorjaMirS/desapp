@@ -31,7 +31,7 @@ export default function DespesaForm({afegirDespesa}) {
     console.log(despesa)
 
     afegirDespesa(despesa)
-    
+
     resetForm()
   }
 
@@ -47,7 +47,12 @@ export default function DespesaForm({afegirDespesa}) {
         </label>
         <label>
             <span>Pagat per</span>  
-            <input type="text" onChange={(e) => setPagatPer(e.target.value)} value={pagatPer}/>          
+            <select onChange={(e) => {setPagatPer(e.target.value)}}>
+              <option value="joan">Joan</option>
+              <option value="borja">Borja</option>
+              <option value="david">David</option>
+              <option value="pere">Pere</option>
+            </select>
         </label>
         <button>Afegir</button>
         <p>CONCEPTE: { concepte } Quantia: {quantia} Pagat per: {pagatPer}</p>
