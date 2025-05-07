@@ -2,11 +2,13 @@ import './DespesaForm.css'
 
 
 export default function DespesaForm() {
+
+  const handleChange = (e) => {}; 
   return (
     <form className="despesa-form">
         <label>
             <span>Concepte</span>  
-            <input type="text" />          
+            <input type="text" onChange={handleChange}/>          
         </label>
         <label>
             <span>Quantia</span>  
