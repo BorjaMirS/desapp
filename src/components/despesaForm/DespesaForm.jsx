@@ -3,7 +3,10 @@ import './DespesaForm.css'
 
 export default function DespesaForm() {
 
-  const handleChange = (e) => {}; 
+  const handleChange = (e) => {
+    console.log(e.target.value)
+  }; 
+  
   return (
     <form className="despesa-form">
         <label>
