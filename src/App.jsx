@@ -29,7 +29,13 @@ function App() {
   //console.log(mostrarDespeses)
   console.log(mostraModal)
 
+  //Use effect
+
   const subtitol = "React & Firebase!!"
+
+  setDespeses((despesesPrevies) => {
+    return despesesPrevies.filter((despesa) => despesa.quantia > 10.00)
+  })
 
   const afegirDespesa = (despesa) => {
       setDespeses((despesesPrevies) => {
@@ -79,6 +85,7 @@ function App() {
       <div>
         <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
       </div>
+      {/*
       <div>
         <button onClick={ () => {
           setDespeses((despesesPrevies) => {
@@ -88,6 +95,7 @@ function App() {
           )
         } }>Filtrar</button>
       </div>
+      */}
     </div>
   )
 }
