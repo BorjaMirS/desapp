@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './DespesaForm.css'
 
 
-export default function DespesaForm() {
+export default function DespesaForm({afegirDespesa}) {
 
   const [concepte, setConcepte] = useState("")
   const [quantia, setQuantia] = useState("")
@@ -30,6 +30,8 @@ export default function DespesaForm() {
 
     console.log(despesa)
 
+    afegirDespesa(despesa)
+    
     resetForm()
   }
 

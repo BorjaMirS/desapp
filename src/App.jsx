@@ -34,8 +34,9 @@ function App() {
   const afegirDespesa = (despesa) => {
       setDespeses((despesesPrevies) => {
         return [...despesesPrevies, despesa]
-      }
-      )
+      })
+
+      setMostraModal(false)
   }
 
   const handleClick = (id) => {
@@ -73,7 +74,7 @@ function App() {
         mostrarDespeses && <DespesesLlista despeses={despeses} handleClick={handleClick}/>
       }
       { mostraModal && <Modal handleTancar = {handleTancar}>  
-          <DespesaForm />
+          <DespesaForm afegirDespesa={afegirDespesa}/>
       </Modal>  }
       <div>
         <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
