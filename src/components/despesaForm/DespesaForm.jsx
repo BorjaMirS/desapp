@@ -22,18 +22,19 @@ export default function DespesaForm() {
     <form className="despesa-form">
         <label>
             <span>Concepte</span>  
-            <input type="text" onChange={(e) => setConcepte(e.target.value)}/>          
+            <input type="text" onChange={(e) => setConcepte(e.target.value)} value={concepte}/>          
         </label>
         <label>
             <span>Quantia</span>  
-            <input type="text" onChange={(e) => setQuantia(e.target.value)}/>          
+            <input type="text" onChange={(e) => setQuantia(e.target.value)} value={quantia}/>          
         </label>
         <label>
             <span>Pagat per</span>  
-            <input type="text" onChange={(e) => setPagatPer(e.target.value)}/>          
+            <input type="text" onChange={(e) => setPagatPer(e.target.value)} value={pagatPer}/>          
         </label>
         <button>Afegir</button>
         <p>CONCEPTE: { concepte } Quantia: {quantia} Pagat per: {pagatPer}</p>
+        <p onClick={resetForm}>Restablir els valors inicials</p>
     </form>
   )
 }
