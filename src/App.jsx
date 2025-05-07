@@ -17,14 +17,14 @@ function App() {
   //let titol = "Benvinguts al curs"
   const [mostrarDespeses, setMostrarDespeses] = useState(true)
   const [mostraModal, setMostraModal] = useState(false)
-  /*const [despeses, setDespeses] = useState([
+  const [despeses, setDespeses] = useState([
     {concepte: "dinar", quantia: 50.67, pagatPer:"Pere", id:1},
-    {concepte: "sopar", quantia: 33.33, pagatPer:"Toni", id:2},
-    {concepte: "excursió", quantia: 150.27, pagatPer:"Anna", id:3}
+    {concepte: "sopar", quantia: 9.33, pagatPer:"Toni", id:2},
+    {concepte: "excursió", quantia: 8.27, pagatPer:"Anna", id:3}
   ])
-    */
+    
 
-  const [despeses, setDespeses] = useState([])
+  //const [despeses, setDespeses] = useState([])
 
   //console.log(mostrarDespeses)
   console.log(mostraModal)
@@ -78,6 +78,15 @@ function App() {
       </Modal>  }
       <div>
         <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
+      </div>
+      <div>
+        <button onClick={ () => {
+          setDespeses((despesesPrevies) => {
+            return despesesPrevies.filter((despesa) => despesa.quantia > 10.00)
+          }
+
+          )
+        } }>Filtrar</button>
       </div>
     </div>
   )
