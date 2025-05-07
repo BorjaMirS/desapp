@@ -18,8 +18,23 @@ export default function DespesaForm() {
     console.log(e.target.value)
   }; 
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const despesa = {
+      concepte: concepte,
+      quantia: quantia,
+      pagatPer: pagatPer,
+      id: Math.floor(Math.random()*1000)
+    }
+
+    console.log(despesa)
+
+    resetForm()
+  }
+
   return (
-    <form className="despesa-form">
+    <form className="despesa-form" onSubmit={handleSubmit}>
         <label>
             <span>Concepte</span>  
             <input type="text" onChange={(e) => setConcepte(e.target.value)} value={concepte}/>          
