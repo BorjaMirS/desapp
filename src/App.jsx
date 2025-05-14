@@ -5,6 +5,8 @@ import Titol from './components/titol/Titol'
 import Modal from './components/modal/Modal'
 import DespesesLlista from './components/despesesllista/despesesllista'
 import DespesaForm from './components/despesaForm/DespesaForm'
+import { saveDespesa, onGetDespeses, deleteDespesa } from './firebase/firebase'
+
 //Importam React a la primera linea per emprar fragment
 //1. clic event
 //2. Estats
@@ -17,11 +19,7 @@ function App() {
   //let titol = "Benvinguts al curs"
   const [mostrarDespeses, setMostrarDespeses] = useState(true)
   const [mostraModal, setMostraModal] = useState(false)
-  const [despeses, setDespeses] = useState([
-    {concepte: "dinar", quantia: 50.67, pagatPer:"Pere", id:1},
-    {concepte: "sopar", quantia: 9.33, pagatPer:"Toni", id:2},
-    {concepte: "excursió", quantia: 8.27, pagatPer:"Anna", id:3}
-  ])
+  const [despeses, setDespeses] = useState(null)
 
   const [filtrarPerQuantia, setFiltrarPerQuantia] = useState(false)
     
@@ -35,7 +33,19 @@ function App() {
 
   const subtitol = "React & Firebase!!"
 
+ useEffect(() => {
+    onGetDespeses((querySnapshot) => {
+      let resultats = []
 
+      querySnapshot.forEach((doc) => {
+        const despesa = doc.data()
+        despesa.id = doc.id
+        resultats.push({...doc.data(), id: doc.id})
+      })
+
+      setDespeses(resultats)
+    })
+ },[])
 
   useEffect(() => {
     setDespeses((despesesPrevies) => {
@@ -88,7 +98,7 @@ function App() {
      } 
       { 
       //Index és un atribut per defecte de map
-        mostrarDespeses && <DespesesLlista despeses={despeses} handleClick={handleClick}/>
+        despeses && <DespesesLlista despeses={despeses} handleClick={handleClick}/>
       }
       { mostraModal && <Modal handleTancar = {handleTancar}>  
           <DespesaForm afegirDespesa={afegirDespesa}/>
