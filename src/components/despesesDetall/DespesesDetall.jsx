@@ -16,7 +16,7 @@ export default function DespesesDetall() {
                 setDespesa(null)
             }
         })
-        return ()=>unsubscribe();
+        return () => unsubscribe()
     }, [id])
 
     if (!despesa) {
