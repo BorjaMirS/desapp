@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Inici from './pages/inici/inici'
 import Login from './pages/login/login'
 import Navbar from './components/navbar/Navbar'
+import DespesesDetall from './components/despesesDetall/DespesesDetall'
 
 //Importam React a la primera linea per emprar fragment
 //1. clic event
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Inici />} />
         <Route path='/login' element={ <Login />} />
+        <Route path='/despesa/:id' element={ <DespesesDetall /> }/>
         <Route path='*' element={ <Navigate to="/" replace />} />
       </Routes>
     <Navbar />

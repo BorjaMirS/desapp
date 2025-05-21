@@ -3,8 +3,9 @@ import Titol from '../../components/titol/Titol'
 import Modal from '../../components/modal/Modal'
 import DespesesLlista from '../../components/despesesllista/despesesllista'
 import DespesaForm from '../../components/despesaForm/DespesaForm'
-import { saveDespesa, onGetDespeses, deleteDespesa } from '../../firebase/firebase'
+import { saveDespesa, onGetCollection, deleteDespesa } from '../../firebase/firebase'
 import { useState, useEffect } from 'react'
+import { useCollection } from '../../hooks/useCollection'
 
 export default function inici() {
 
@@ -13,11 +14,12 @@ export default function inici() {
       const [despeses, setDespeses] = useState(null)
     
       const [filtrarPerQuantia, setFiltrarPerQuantia] = useState(false)
+      // hook personalitzat const { documents: despeses } = useCollection('despeses')
 
-    const subtitol = "React & Firebase!!"
+      const subtitol = "React & Firebase!!"
 
       useEffect(() => {
-           onGetDespeses((querySnapshot) => {
+        onGetCollection("despeses", (querySnapshot) => {
             let resultats = []
       
             querySnapshot.forEach((doc) => {

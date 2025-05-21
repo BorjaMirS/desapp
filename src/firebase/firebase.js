@@ -30,8 +30,8 @@ export const saveDespesa = async (despesa) => {
  export const getDespeses = () => 
   getDocs(collection(db, "despeses"));
 
- export const onGetDespeses = (callback) => 
-  onSnapshot(collection(db, "despeses"), callback);
+ export const onGetCollection = (collectionName, callback) => 
+  onSnapshot(collection(db, collectionName), callback);
 
  export const deleteDespesa = async (id) =>  {
   try {
@@ -40,4 +40,8 @@ export const saveDespesa = async (despesa) => {
   } catch (error) {
     console.error("Error eliminant despesa: ", error);
   }
+ }
+
+ export const OnGetDespesa = (id, callback) => {
+  onSnapshot(doc(db, "despeses", id), callback)
  }
