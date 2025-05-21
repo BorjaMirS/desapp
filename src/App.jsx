@@ -6,6 +6,10 @@ import Modal from './components/modal/Modal'
 import DespesesLlista from './components/despesesllista/despesesllista'
 import DespesaForm from './components/despesaForm/DespesaForm'
 import { saveDespesa, onGetDespeses, deleteDespesa } from './firebase/firebase'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Inici from './pages/inici/inici'
+import Login from './pages/login/login'
+import Navbar from './components/navbar/Navbar'
 
 //Importam React a la primera linea per emprar fragment
 //1. clic event
@@ -34,7 +38,7 @@ function App() {
   const subtitol = "React & Firebase!!"
 
  useEffect(() => {
-    onGetDespeses((querySnapshot) => {
+     onGetDespeses((querySnapshot) => {
       let resultats = []
 
       querySnapshot.forEach((doc) => {
@@ -60,11 +64,33 @@ function App() {
 
   const afegirDespesa = (despesa) => {
       setDespeses((despesesPrevies) => {
-        return [...despesesPrevies, despesa]
+
+        saveDespesa(despesa)
+         .then((idDespesa) => {
+            despesa.id = idDespesa
+
+            if (!despesesPrevies) {
+              return [despesa]
+            } else {
+              return [...despesesPrevies, despesa]
+            }
+         })
+
       })
 
       setMostraModal(false)
   }
+
+
+  const eliminarDespesa = (id) => {
+    setDespeses((despesesPrevies) => {
+      deleteDespesa(id).then(() => {
+
+      })
+    })
+
+    setMostraModal(false)
+}
 
   const handleClick = (id) => {
     // console.log(id)
@@ -81,6 +107,13 @@ function App() {
   
   return (
     <div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Inici />} />
+        <Route path='/login' element={ <Login />} />
+      </Routes>
+    </BrowserRouter>
+    <Navbar />
       <Titol titol="Benvinguts al curs!!" subtitol={subtitol} />
      {  !mostrarDespeses && 
        (
