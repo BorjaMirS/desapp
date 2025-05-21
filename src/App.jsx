@@ -107,12 +107,10 @@ function App() {
   
   return (
     <div>
-    <BrowserRouter>
       <Routes>
         <Route path='/' element={<Inici />} />
         <Route path='/login' element={ <Login />} />
       </Routes>
-    </BrowserRouter>
     <Navbar />
       <Titol titol="Benvinguts al curs!!" subtitol={subtitol} />
      {  !mostrarDespeses && 
