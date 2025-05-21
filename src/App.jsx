@@ -1,7 +1,6 @@
 
-import React, { useState, useEffect } from 'react'
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Inici from './pages/inici/inici'
 import Login from './pages/login/login'
 import Navbar from './components/navbar/Navbar'
@@ -14,23 +13,12 @@ import Navbar from './components/navbar/Navbar'
 
 function App() {
 
-  // Creació dels primers components dinàmics
-  //let titol = "Benvinguts al curs"
-
-    
-
-  //const [despeses, setDespeses] = useState([])
-
-  //console.log(mostrarDespeses)
-
-  //Use effect
-
-
   return (
     <div>
       <Routes>
         <Route path='/' element={<Inici />} />
         <Route path='/login' element={ <Login />} />
+        <Route path='*' element={ <Navigate to="/" replace />} />
       </Routes>
     <Navbar />
     </div>
