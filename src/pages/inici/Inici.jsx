@@ -66,7 +66,7 @@ export default function inici() {
         const eliminarDespesa = (id) => {
           setDespeses((despesesPrevies) => {
             deleteDespesa(id).then(() => {
-      
+              return despesesPrevies.filter((despesa) => id !== despesa.id)
             })
           })
       
