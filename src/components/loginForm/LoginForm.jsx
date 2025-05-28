@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './LoginForm.css'
 import { loginUser } from '../../firebase/firebase';
 import { useNavigate } from 'react-router-dom';
 export default function LoginForm() {
 
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail ] = useState("");
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -15,9 +15,11 @@ export default function LoginForm() {
 
     const res = await loginUser(email , password);
 
+    console.log("Resposta:", res);
+
     if (res.code == undefined) {
       console.log(res.user.uid);
-      navigate("/projectes");
+      navigate("/projectes", {replace:true});
     } else {
       setError(res.message);
     }
@@ -33,6 +35,7 @@ export default function LoginForm() {
             <span>Contrasenya: 8 caràcters</span>
             <input type="password" minLength="8" value={password} onChange={(e) => setPassword(e.target.value)} required/>
         </label>
+        {error && <p style={{ color: 'red'}}> {error} </p>}
         <button>Login</button>
     </form>
   )
