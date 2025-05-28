@@ -1,7 +1,7 @@
  // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
  // TODO: Add SDKs for Firebase products that you want to use
  // https://firebase.google.com/docs/web/setup#available-libraries
@@ -80,4 +80,11 @@ export const loginUser = async (email, password) => {
     console.log("Error login: ", error.code);
   }
 }
+export const logoutUser = async () => {
+     await signOut(auth);
+}
  
+//Crear mètode per comprovar si tenim usuari logejat: onAuthStateChanged
+export const isUserLoggedIn = async () => {
+  await onAuthStateChanged();
+}

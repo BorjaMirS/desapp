@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './LoginForm.css'
 import { loginUser } from '../../firebase/firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 export default function LoginForm() {
 
   const [password, setPassword] = useState('');
@@ -19,7 +19,8 @@ export default function LoginForm() {
 
     if (res.code == undefined) {
       console.log(res.user.uid);
-      navigate("/projectes", {replace:true});
+     // navigate("/projectes", {replace:true});
+     return <Navigate to="/" replace />
     } else {
       setError(res.message);
     }
