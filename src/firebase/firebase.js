@@ -81,7 +81,7 @@ export const loginUser = async (email, password) => {
   }
 }
 export const logoutUser = async () => {
-     await signOut(auth);
+   await signOut(auth);
 }
  
 //Crear mètode per comprovar si tenim usuari logejat: onAuthStateChanged

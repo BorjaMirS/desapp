@@ -1,11 +1,12 @@
 
 import './App.css'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import Inici from './pages/inici/inici'
+import Inici from './pages/inici/Inici'
 import Login from './pages/login/login'
 import Navbar from './components/navbar/Navbar'
 import DespesesDetall from './components/despesesDetall/DespesesDetall'
 import Register from './pages/register/Register'
+import Projectes from './pages/projectes/Projectes'
 
 //Importam React a la primera linea per emprar fragment
 //1. clic event
@@ -22,7 +23,7 @@ function App() {
         <Route path='/login' element={ <Login />} />
         <Route path='/despesa/:id' element={ <DespesesDetall /> }/>
         <Route path='/registre' element= { <Register />} />
-        <Route path='/projectes' element= { <Inici />} />
+        <Route path='/projectes' element= { <Projectes />} />
         <Route path='*' element={ <Navigate to="/" replace />} />
       </Routes>
     <Navbar />
