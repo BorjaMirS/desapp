@@ -22,6 +22,7 @@ function App() {
         <Route path='/login' element={ <Login />} />
         <Route path='/despesa/:id' element={ <DespesesDetall /> }/>
         <Route path='/registre' element= { <Register />} />
+        <Route path='/projectes' element= { <Inici />} />
         <Route path='*' element={ <Navigate to="/" replace />} />
       </Routes>
     <Navbar />
