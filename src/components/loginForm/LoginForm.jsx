@@ -19,8 +19,7 @@ export default function LoginForm() {
 
     if (res.code == undefined) {
       console.log(res.user.uid);
-     // navigate("/projectes", {replace:true});
-     return <Navigate to="/" replace />
+      navigate("/projectes", {replace:true});
     } else {
       setError(res.message);
     }
