@@ -2,32 +2,30 @@ import {useState} from 'react'
 import Modal from '../../components/modal/Modal';
 import ProjectForm from '../../components/projectForm/ProjectForm';
 import { saveCollection } from '../../firebase/firebase';
+import { useCollection } from '../../hooks/useCollection'
+
 
 export default function Projectes() {
 
   const [mostraModal, setMostraModal] = useState(false);
-  const [projectes, setProjectes] = useState(null);
+  const { documents: projectes } = useCollection('projectes');
 
   const handleTancar = () => {
     setMostraModal(false);
   }
 
+
   const afegirProjecte = (projecte) => {
-    setProjectes((projectesPrevis) => {
     saveCollection("projectes", projecte)
       .then((idProjecte) => {
-        projecte.id = idProjecte
-        
-        if (!projectesPrevis) {
-            return [projecte]
-        } else {
-            return [...projectesPrevis, projecte]
-          }
+        console.log(`Projecte afegit amb id: ${idProjecte}`);
+        projecte.id = idProjecte;
         })
-        
-    })
-        
-    setMostraModal(false)
+        .catch((error) => {
+          console.log("Error afegint projecte: ", error);
+        })
+        .finally(()=> setMostraModal(false));
+                
   }
 
   return (
@@ -36,7 +34,7 @@ export default function Projectes() {
         <button onClick={() => setMostraModal(true)}>Crear nou projecte</button>
         {
           mostraModal && <Modal handleTancar={handleTancar}>
-                            <ProjectForm afegirProjectes={afegirProjectes}/>
+                            <ProjectForm afegirProjectes={afegirProjecte}/>
                         </Modal>
         }
     </div>

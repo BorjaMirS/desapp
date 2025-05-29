@@ -32,26 +32,7 @@ export default function ProjectForm({projecte}) {
 
     resetForm()
   }
-/*
-         const afegirDespesa = (despesa) => {
-              setDespeses((despesesPrevies) => {
-        
-                saveDespesa(despesa)
-                 .then((idDespesa) => {
-                    despesa.id = idDespesa
-        
-                    if (!despesesPrevies) {
-                      return [despesa]
-                    } else {
-                      return [...despesesPrevies, despesa]
-                    }
-                 })
-        
-              })
-        
-              setMostraModal(false)
-          }
-*/
+
   return (
     <div>
         <form className="projecte-form" onSubmit={handleSubmit}>
@@ -69,7 +50,7 @@ export default function ProjectForm({projecte}) {
                 </select>
             </label>
             <button>Crear</button>
-            <p onClick={resetForm}>Restablir els valors inicials</p>
+            <button onClick={resetForm}>Restablir els valors inicials</button>
         </form>
     </div>
 

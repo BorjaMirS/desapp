@@ -57,6 +57,15 @@ export const saveDespesa = async (despesa) => {
   }
  }
 
+ export const deleteDocument = async (document, id) => {
+   try {
+    await deleteDoc(doc(db, document, id));
+    console.log(`Document eliminat ${document} eliminada amb ID: ${id}`);
+  } catch (error) {
+    console.error("Error eliminant document: ", error);
+  } 
+ }
+
  export const OnGetDespesa = (id, callback) => 
   onSnapshot(doc(db, "despeses", id), callback);
 
