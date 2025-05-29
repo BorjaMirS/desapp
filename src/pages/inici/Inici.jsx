@@ -1,7 +1,7 @@
 
 import Titol from '../../components/titol/Titol'
 import Modal from '../../components/modal/Modal'
-import DespesesLlista from '../../components/despesesllista/despesesllista'
+import DespesesLlista from '../../components/despesesllista/DespesesLlista'
 import DespesaForm from '../../components/despesaForm/DespesaForm'
 import { saveDespesa, onGetCollection, deleteDespesa } from '../../firebase/firebase'
 import { useState, useEffect } from 'react'
@@ -11,13 +11,15 @@ export default function inici() {
 
       const [mostrarDespeses, setMostrarDespeses] = useState(true)
       const [mostraModal, setMostraModal] = useState(false)
-      const [despeses, setDespeses] = useState(null)
-    
+      //const [despeses, setDespeses] = useState(null)
+      const { documents: despeses } = useCollection('despeses');
+
       const [filtrarPerQuantia, setFiltrarPerQuantia] = useState(false)
       // hook personalitzat const { documents: despeses } = useCollection('despeses')
 
       const subtitol = "React & Firebase!!"
 
+      /*
       useEffect(() => {
         onGetCollection("despeses", (querySnapshot) => {
             let resultats = []
@@ -42,35 +44,29 @@ export default function inici() {
         }
          , [filtrarPerQuantia]
         )
-      
-        const afegirDespesa = (despesa) => {
-            setDespeses((despesesPrevies) => {
-      
-              saveDespesa(despesa)
-               .then((idDespesa) => {
-                  despesa.id = idDespesa
-      
-                  if (!despesesPrevies) {
-                    return [despesa]
-                  } else {
-                    return [...despesesPrevies, despesa]
-                  }
-               })
-      
+      */
+     const afegirDespesa = (despesa) => {
+        saveDespesa(despesa)
+            .then((idDespesa) => {
+                console.log(`Despesa afegida amb id: ${idDespesa}`);
+                despesa.id = idDespesa;
             })
-      
-            setMostraModal(false)
-        }
-      
-      
-        const eliminarDespesa = (id) => {
-          setDespeses((despesesPrevies) => {
-            deleteDespesa(id).then(() => {
-              return despesesPrevies.filter((despesa) => id !== despesa.id)
+            .catch((error) => {
+                console.error("Error afegint la despesa:", error);
             })
-          })
-      
-          setMostraModal(false)
+            .finally(() => {
+                setMostraModal(false); // Tanca el modal, independentment del resultat
+            });
+       };
+
+      const eliminarDespesa = (id) => {
+        deleteDespesa(id)
+            .then(() => {
+                console.log(`Despesa amb id ${id} eliminada correctament`);
+            })
+            .catch((error) => {
+                console.error("Error eliminant la despesa:", error);
+            });
       }
 
       const handleClick = (id) => {

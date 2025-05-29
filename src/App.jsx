@@ -2,7 +2,7 @@
 import './App.css'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Inici from './pages/inici/Inici'
-import Login from './pages/login/login'
+import Login from './pages/login/Login'
 import Navbar from './components/navbar/Navbar'
 import DespesesDetall from './components/despesesDetall/DespesesDetall'
 import Register from './pages/register/Register'
