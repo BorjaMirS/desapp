@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './ProjectForm.css'
-import { saveCollection } from '../../firebase/firebase';
-
+import { useAuth } from '../../components/authContext/AuthContext';
 
 export default function ProjectForm({afegirProjecte}) {
 
@@ -9,7 +8,15 @@ export default function ProjectForm({afegirProjecte}) {
   const [quantia, setQuantia] = useState("")
   const [pagatPer, setPagatPer] = useState("")
   const [participants, setParticipants] = useState(null)
-
+  const [error, setError] = useState('');
+  const { user } = useAuth();
+/*
+  useEffect(() => {
+    if (user) {
+      console.log("Usuari autenticat amb UID:", user.uid);
+    }
+  }, [user]);
+*/
   const resetForm = () => {
     setName("")
     setQuantia("")
@@ -23,12 +30,19 @@ export default function ProjectForm({afegirProjecte}) {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const projecte = {
+    if (user) {
+      console.log(`Usuari: ${user.uid}`);
+      const projecte = {
         nom: name,
+        propietari:user.uid,
         participants: ["pepe", "tomeu"]
+      }
+
+      afegirProjecte(projecte);
+    } else {
+      setError("Un usuari no autenticat no pot crear projectes");
     }
 
-    afegirProjecte(projecte);
 
     resetForm()
   }
@@ -50,6 +64,7 @@ export default function ProjectForm({afegirProjecte}) {
                 <option value="pere">Pere</option>
                 </select>
             </label>
+            {error && <p style={{ color: 'red'}}> {error} </p>}
             <button>Crear</button>
             <button onClick={resetForm}>Restablir els valors inicials</button>
         </form>

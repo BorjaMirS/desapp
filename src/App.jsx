@@ -24,6 +24,7 @@ function App() {
         <Route path='/despesa/:id' element={ <DespesesDetall /> }/>
         <Route path='/registre' element= { <Register />} />
         <Route path='/projectes' element= { <Projectes />} />
+        <Route path='/projecte/:id' element={<Projectes/>} />
         <Route path='*' element={ <Navigate to="/" replace />} />
       </Routes>
     <Navbar />

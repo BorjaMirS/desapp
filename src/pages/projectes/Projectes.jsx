@@ -1,15 +1,17 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Modal from '../../components/modal/Modal';
 import ProjectForm from '../../components/projectForm/ProjectForm';
 import { saveCollection, deleteDocument } from '../../firebase/firebase';
 import { useCollection } from '../../hooks/useCollection'
 import ProjectesLlista from '../../components/projectesLlista/ProjectesLlista'
+import { useAuth } from '../../components/authContext/AuthContext';
 
 
 export default function Projectes() {
 
   const [mostraModal, setMostraModal] = useState(false);
   const { documents: projectes } = useCollection('projectes');
+  const { user } = useAuth();
 
   const handleTancar = () => {
     setMostraModal(false);

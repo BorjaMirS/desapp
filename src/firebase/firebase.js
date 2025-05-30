@@ -94,6 +94,6 @@ export const logoutUser = async () => {
 }
  
 //Crear mètode per comprovar si tenim usuari logejat: onAuthStateChanged
-export const isUserLoggedIn = async (user) => 
-  await onAuthStateChanged(auth, user);
+export const isUserLoggedIn =  (user) => 
+   onAuthStateChanged(auth, user);
 
