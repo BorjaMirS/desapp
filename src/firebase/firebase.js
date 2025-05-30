@@ -36,7 +36,7 @@ export const saveDespesa = async (despesa) => {
  export const saveCollection = async (collectionName, item) => {
   console.log(item);
   const docRef = await addDoc(collection(db, collectionName), item);
-
+  console.log("Collection amb id: ", docRef.id);
   return docRef.id;
 
 }

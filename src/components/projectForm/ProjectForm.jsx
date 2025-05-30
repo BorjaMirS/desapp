@@ -3,7 +3,7 @@ import './ProjectForm.css'
 import { saveCollection } from '../../firebase/firebase';
 
 
-export default function ProjectForm({projecte}) {
+export default function ProjectForm({afegirProjecte}) {
 
   const [name, setName] = useState("")
   const [quantia, setQuantia] = useState("")
@@ -28,10 +28,11 @@ export default function ProjectForm({projecte}) {
         participants: ["pepe", "tomeu"]
     }
 
-    saveCollection("projectes", projecte);
+    afegirProjecte(projecte);
 
     resetForm()
   }
+
 
   return (
     <div>

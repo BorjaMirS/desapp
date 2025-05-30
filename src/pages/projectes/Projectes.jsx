@@ -18,13 +18,17 @@ export default function Projectes() {
   const afegirProjecte = (projecte) => {
     saveCollection("projectes", projecte)
       .then((idProjecte) => {
-        console.log(`Projecte afegit amb id: ${idProjecte}`);
+        console.log("Projecte afegit amb id: ", idProjecte);
         projecte.id = idProjecte;
         })
         .catch((error) => {
           console.log("Error afegint projecte: ", error);
         })
-        .finally(()=> setMostraModal(false));
+        .finally(()=> {
+          console.log("Tancant modal projecte");
+
+          setMostraModal(false);
+        });
                 
   }
 
@@ -34,7 +38,7 @@ export default function Projectes() {
         <button onClick={() => setMostraModal(true)}>Crear nou projecte</button>
         {
           mostraModal && <Modal handleTancar={handleTancar}>
-                            <ProjectForm afegirProjectes={afegirProjecte}/>
+                            <ProjectForm afegirProjecte={afegirProjecte}/>
                         </Modal>
         }
     </div>
