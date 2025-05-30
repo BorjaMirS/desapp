@@ -5,19 +5,21 @@ import { OnGetDocument } from '../../firebase/firebase';
 export default function ProjectesDetall() {
     const { id } = useParams();
     const [projecte, setProjecte] = useState(null);
+    const [userName, setUserName] = useState("");
     
     useEffect(() => {
         const unsubscribe = OnGetDocument(id, "projectes", (proj) => {
-            console.log("Projecte abans: ",proj);
+            console.log("Projecte abans: ",proj.data());
             if (proj.exists()) {
-                setProjecte({...proj.data(),id: proj.id });
-                console.log("Projecte després: ", proj);
+                setProjecte(proj.data());
+                console.log("Projecte després: ", proj.data());
+                console.log("Aquest es un projecte", projecte);
             } else {
                 setProjecte(null);
             }
         })
         return () => unsubscribe()
-    }, [id])
+    }, [])
 
     if (!projecte) {
         return <p>Projecte no trobat</p>    
@@ -30,6 +32,7 @@ export default function ProjectesDetall() {
         </h2>
         <p><strong> Nom: </strong>{projecte.nom}</p>
         <p><strong> ID Propietari: </strong>{projecte.idpropietari}</p>
+        <p><strong> Nom Propietari: </strong>{projecte.nompropietari}</p>
     </div>
     
   )

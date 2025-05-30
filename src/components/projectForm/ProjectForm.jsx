@@ -1,26 +1,30 @@
 import { useState, useEffect } from 'react';
 import './ProjectForm.css'
 import { useAuth } from '../../components/authContext/AuthContext';
+import { OnGetDocument } from '../../firebase/firebase';
 
 export default function ProjectForm({afegirProjecte}) {
 
   const [name, setName] = useState("")
-  const [quantia, setQuantia] = useState("")
-  const [pagatPer, setPagatPer] = useState("")
   const [participants, setParticipants] = useState(null)
   const [error, setError] = useState('');
   const { user } = useAuth();
+  const [userName, setUserName] = useState('');
 /*
   useEffect(() => {
     if (user) {
-      console.log("Usuari autenticat amb UID:", user.uid);
+      
+      const unsubscribe = OnGetDocument(user.uid, "usuaris", (usuari) => {
+          if (usuari) {
+            setUserName(usuari.data());
+            console.log("Nom d'usuari: ", usuari.data());
+          }
+      })
     }
   }, [user]);
 */
   const resetForm = () => {
     setName("")
-    setQuantia("")
-    setPagatPer("")
   }
 
   const handleChange = (e) => {
@@ -35,7 +39,7 @@ export default function ProjectForm({afegirProjecte}) {
       const projecte = {
         nom: name,
         idpropietari:user.uid,
-        //nompropietari:user.name,
+       // nompropietari:userName,
         participants: ["pepe", "tomeu"]
       }
 
