@@ -1,7 +1,7 @@
 import React from 'react'
 import estils from './ProjectesLlista.module.css'
 
-export default function ProjectesLlista({projectes, eliminarProjectes}) {
+export default function ProjectesLlista({projectes, eliminarProjecte}) {
   return (
         <div>
             {
