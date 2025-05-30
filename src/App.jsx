@@ -7,6 +7,7 @@ import Navbar from './components/navbar/Navbar'
 import DespesesDetall from './components/despesesDetall/DespesesDetall'
 import Register from './pages/register/Register'
 import Projectes from './pages/projectes/Projectes'
+import ProjectesDetall from './components/projectesDetall/ProjectesDetall'
 
 //Importam React a la primera linea per emprar fragment
 //1. clic event
@@ -24,7 +25,7 @@ function App() {
         <Route path='/despesa/:id' element={ <DespesesDetall /> }/>
         <Route path='/registre' element= { <Register />} />
         <Route path='/projectes' element= { <Projectes />} />
-        <Route path='/projecte/:id' element={<Projectes/>} />
+        <Route path='/projecte/:id' element={<ProjectesDetall/>} />
         <Route path='*' element={ <Navigate to="/" replace />} />
       </Routes>
     <Navbar />

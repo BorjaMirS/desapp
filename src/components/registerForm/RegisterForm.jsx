@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './RegisterForm.css'
 import { registerUser, saveCollection } from '../../firebase/firebase';
+import { updateProfile } from 'firebase/auth';
 
 export default function RegisterForm() {
 

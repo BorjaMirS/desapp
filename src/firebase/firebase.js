@@ -66,6 +66,9 @@ export const saveDespesa = async (despesa) => {
   } 
  }
 
+ export const OnGetDocument = (id, collectionName, callback) => 
+    onSnapshot(doc(db, collectionName, id), callback);
+
  export const OnGetDespesa = (id, callback) => 
   onSnapshot(doc(db, "despeses", id), callback);
 

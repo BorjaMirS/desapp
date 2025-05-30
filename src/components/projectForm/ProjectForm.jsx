@@ -31,10 +31,11 @@ export default function ProjectForm({afegirProjecte}) {
     e.preventDefault()
 
     if (user) {
-      console.log(`Usuari: ${user.uid}`);
+      console.log(`Usuari: ${user}`);
       const projecte = {
         nom: name,
-        propietari:user.uid,
+        idpropietari:user.uid,
+        //nompropietari:user.name,
         participants: ["pepe", "tomeu"]
       }
 

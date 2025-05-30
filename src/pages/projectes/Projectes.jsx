@@ -11,7 +11,6 @@ export default function Projectes() {
 
   const [mostraModal, setMostraModal] = useState(false);
   const { documents: projectes } = useCollection('projectes');
-  const { user } = useAuth();
 
   const handleTancar = () => {
     setMostraModal(false);
