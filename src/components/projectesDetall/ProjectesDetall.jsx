@@ -3,12 +3,17 @@ import { useParams } from 'react-router-dom'
 import { OnGetDocument, updateParticipants } from '../../firebase/firebase';
 import Modal from '../modal/Modal';
 import ParticipantsForm from '../participantsForm/ParticipantsForm';
+import DespesesLlista from '../despesesllista/DespesesLlista';
+import DespesaForm from '../despesaForm/DespesaForm';
+import { useCollection } from '../../hooks/useCollection';
 
 export default function ProjectesDetall() {
     const { id } = useParams();
     const [projecte, setProjecte] = useState(null);
     const [userName, setUserName] = useState("");
     const [mostraModal, setMostraModal] = useState(false);
+    const [mostrarDespeses, setMostrarDespeses] = useState(true)
+    const { documents: despeses } = useCollection('despeses');
 
     
     useEffect(() => {
@@ -38,6 +43,30 @@ export default function ProjectesDetall() {
 
   }
 
+       const afegirDespesa = (despesa) => {
+          saveDespesa(despesa)
+              .then((idDespesa) => {
+                  console.log(`Despesa afegida amb id: ${idDespesa}`);
+                  despesa.id = idDespesa;
+              })
+              .catch((error) => {
+                  console.error("Error afegint la despesa:", error);
+              })
+              .finally(() => {
+                  setMostraModal(false); // Tanca el modal, independentment del resultat
+              });
+         };
+  
+        const eliminarDespesa = (id) => {
+          deleteDespesa(id)
+              .then(() => {
+                  console.log(`Despesa amb id ${id} eliminada correctament`);
+              })
+              .catch((error) => {
+                  console.error("Error eliminant la despesa:", error);
+              });
+        }
+
   return (
     <div>
         <h2>
@@ -62,7 +91,35 @@ export default function ProjectesDetall() {
                                 handleParticipants={handleParticipants}
                                 handleTancar={handleTancar}/>
                         </Modal>
-        }        
+        }
+        {  !mostrarDespeses && 
+               (
+                  <div>
+                    <button onClick={ () => setMostrarDespeses(true)}>Mostrar Despeses</button>
+                  </div>
+                )
+        } 
+        {  mostrarDespeses && 
+            (
+                  <div>
+                    <button onClick={ () => setMostrarDespeses(false)}>Ocultar Despeses</button>
+                  </div>
+            )
+        }
+        { 
+            //Index és un atribut per defecte de map
+            mostrarDespeses && despeses && <DespesesLlista despeses={despeses} eliminarDespesa={eliminarDespesa}/>
+        }
+        { mostraModal && <Modal handleTancar = {handleTancar}>  
+                <DespesaForm afegirDespesa={afegirDespesa}/>
+            </Modal>  
+        }
+        <div>
+            <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
+        </div>
+        <div>
+            <button onClick={() => setFiltrarPerQuantia(true)}>Filtrar</button>
+        </div>                         
     </div>
     
   )

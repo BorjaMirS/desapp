@@ -68,15 +68,7 @@ export default function inici() {
                 console.error("Error eliminant la despesa:", error);
             });
       }
-
-      const handleClick = (id) => {
-        // console.log(id)
-        //setDespeses(despeses.filter((despesa) => id !== despesa.id))
-        setDespeses((despesesPrevies) => {
-          return despesesPrevies.filter((despesa) => id !== despesa.id)
-        })
-      }
-    
+ 
       const handleTancar = () => {
         setMostraModal(false)
       }
@@ -101,7 +93,7 @@ export default function inici() {
                    <Titol titol="Benvinguts al curs!!" subtitol={subtitol} />
             { 
             //Index és un atribut per defecte de map
-                despeses && <DespesesLlista despeses={despeses} eliminarDespesa={eliminarDespesa}/>
+                mostrarDespeses && despeses && <DespesesLlista despeses={despeses} eliminarDespesa={eliminarDespesa}/>
             }
             { mostraModal && <Modal handleTancar = {handleTancar}>  
                 <DespesaForm afegirDespesa={afegirDespesa}/>
