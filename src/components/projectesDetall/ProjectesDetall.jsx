@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { OnGetDocument } from '../../firebase/firebase';
+import { OnGetDocument, updateParticipants } from '../../firebase/firebase';
 import Modal from '../modal/Modal';
 import ParticipantsForm from '../participantsForm/ParticipantsForm';
 
@@ -31,6 +31,13 @@ export default function ProjectesDetall() {
     setMostraModal(false);
   }
 
+  const handleParticipants = async (participantsActualitzats) => {
+    if (!projecte) return;
+
+    await updateParticipants(projecte.id, participantsActualitzats);
+
+  }
+
   return (
     <div>
         <h2>
@@ -40,17 +47,20 @@ export default function ProjectesDetall() {
         <p><strong> ID projecte: </strong>{projecte.id}</p>
         <p><strong> ID Propietari: </strong>{projecte.idpropietari}</p>
         <p><strong> Participants: </strong></p>
-        <ul>
+        <ol>
             {projecte.participants && projecte.participants.length > 0 ? 
                 (projecte.participants.map((participant, index) => (
                  <li key={index}>{participant}</li>))) : 
                  (<li>No hi ha participants</li>)
             }
-        </ul>
+        </ol>
         <button onClick={() => setMostraModal(true)}>Gestionar participants</button>
         {
           mostraModal && <Modal handleTancar={handleTancar}>
-                            <ParticipantsForm/>
+                            <ParticipantsForm 
+                                projecte={projecte}
+                                handleParticipants={handleParticipants}
+                                handleTancar={handleTancar}/>
                         </Modal>
         }        
     </div>

@@ -1,6 +1,6 @@
  // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
  // TODO: Add SDKs for Firebase products that you want to use
@@ -31,6 +31,17 @@ export const saveDespesa = async (despesa) => {
 
     return docRef.id;
 
+ }
+
+ export const updateParticipants = async (idProjecte, participants) => {
+      try {
+      await updateDoc(doc(db, "projectes", idProjecte), {
+        participants: participants
+      });
+      console.log("Participants actualitzats");
+    } catch (error) {
+      console.error("Error actualitzant participants: ", error);
+    }
  }
 
  export const saveCollection = async (collectionName, item) => {
