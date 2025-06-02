@@ -1,6 +1,6 @@
  // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
  // TODO: Add SDKs for Firebase products that you want to use
@@ -111,3 +111,21 @@ export const logoutUser = async () => {
 export const isUserLoggedIn =  (user) => 
    onAuthStateChanged(auth, user);
 
+export const getProjectesByPropietari = async (userId) => {
+  try {
+    const projectesRef = collection(db, "projectes");
+    const q = query(projectesRef, where("idpropietari", "==", userId));
+    const snapshot = await getDocs(q);
+
+    const projectes = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    return projectes;
+
+  } catch (error) {
+    console.error("Error obtenint projectes per propietari:", error);
+    return [];
+  }
+}
