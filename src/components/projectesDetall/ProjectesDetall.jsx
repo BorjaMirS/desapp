@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { OnGetDocument, updateParticipants } from '../../firebase/firebase';
+import { OnGetDocument, saveDespesa, updateParticipants } from '../../firebase/firebase';
 import Modal from '../modal/Modal';
 import ParticipantsForm from '../participantsForm/ParticipantsForm';
 import DespesesLlista from '../despesesllista/DespesesLlista';
@@ -10,7 +10,6 @@ import { useCollection } from '../../hooks/useCollection';
 export default function ProjectesDetall() {
     const { id } = useParams();
     const [projecte, setProjecte] = useState(null);
-    const [userName, setUserName] = useState("");
     const [mostraModal, setMostraModal] = useState(false);
     const [mostrarDespeses, setMostrarDespeses] = useState(true)
     const { documents: despeses } = useCollection('despeses');
@@ -111,7 +110,7 @@ export default function ProjectesDetall() {
             mostrarDespeses && despeses && <DespesesLlista despeses={despeses} eliminarDespesa={eliminarDespesa}/>
         }
         { mostraModal && <Modal handleTancar = {handleTancar}>  
-                <DespesaForm afegirDespesa={afegirDespesa}/>
+                <DespesaForm afegirDespesa={afegirDespesa} projecte={projecte}/>
             </Modal>  
         }
         <div>
