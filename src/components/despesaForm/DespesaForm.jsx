@@ -31,6 +31,7 @@ export default function DespesaForm({afegirDespesa, projecte}) {
       concepte: concepte,
       quantia: quantia,
       pagatPer: pagatPer,
+      projecte: projecte.id 
     }
 
     console.log(despesa)

@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { useState, useEffect } from "react";
 
  // TODO: Add SDKs for Firebase products that you want to use
  // https://firebase.google.com/docs/web/setup#available-libraries
@@ -128,4 +129,23 @@ export const getProjectesByPropietari = async (userId) => {
     console.error("Error obtenint projectes per propietari:", error);
     return [];
   }
+}
+
+export function useFilteredCollection(collectionName, field, value) {
+  const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    if (!value) return;
+
+    const q = query(collection(db, collectionName), where(field, "==", value));
+
+    const unsubscribe = onSnapshot(q, snapshot => {
+      const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setDocuments(docs);
+    });
+
+    return () => unsubscribe();
+  }, [collectionName, field, value]);
+
+  return { documents };
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { OnGetDocument, saveDespesa, updateParticipants } from '../../firebase/firebase';
+import { deleteDespesa, OnGetDocument, saveDespesa, updateParticipants, useFilteredCollection } from '../../firebase/firebase';
 import Modal from '../modal/Modal';
 import ParticipantsForm from '../participantsForm/ParticipantsForm';
 import DespesesLlista from '../despesesllista/DespesesLlista';
@@ -12,7 +12,8 @@ export default function ProjectesDetall() {
     const [projecte, setProjecte] = useState(null);
     const [mostraModal, setMostraModal] = useState(false);
     const [mostrarDespeses, setMostrarDespeses] = useState(true)
-    const { documents: despeses } = useCollection('despeses');
+    const { documents: despeses } = useFilteredCollection('despeses','projecte', projecte?.id );
+    //const [despeses, setDespeses] = useState(null);
 
     
     useEffect(() => {
@@ -26,6 +27,7 @@ export default function ProjectesDetall() {
         })
         return () => unsubscribe()
     }, [id])
+
 
     if (!projecte) {
         return <p>Projecte no trobat</p>    
