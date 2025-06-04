@@ -30,12 +30,6 @@ export default function Navbar() {
     })
   }, []);
 
-  //Posam <> </> perque no em deixa retornar dos elements               <>
-   /*               <li><Link to="/login">Login</Link></li>
-                  <li><Link to="/registre">Registre</Link></li>
-              </>
-
-              */
   return (
     <nav>
         <ul>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './ProjectForm.css'
 import { useAuth } from '../../components/authContext/AuthContext';
-import { onGetCollection, OnGetDocument } from '../../firebase/firebase';
+import { onGetCollection } from '../../firebase/firebase';
 
 export default function ProjectForm({afegirProjecte}) {
 
@@ -10,21 +10,6 @@ export default function ProjectForm({afegirProjecte}) {
   const [error, setError] = useState('');
   const { user } = useAuth();
   const [userName, setUserName] = useState('');
-  //const [nouParticipant, setNouParticipant] = useState('');
-
-/*
-  useEffect(() => {
-    if (user) {
-      
-      const unsubscribe = OnGetDocument(user.uid, "usuaris", (usuari) => {
-          if (usuari) {
-            setUserName(usuari.data());
-            console.log("Nom d'usuari: ", usuari.data());
-          }
-      })
-    }
-  }, [user]);
-*/
 
   // Carrega usuaris des de Firebase
   useEffect(() => {
@@ -38,17 +23,9 @@ export default function ProjectForm({afegirProjecte}) {
     return () => unsubscribe();
   }, []);
 
-/*  const afegirNouParticipant = () => {
-    if (nouParticipant && !participantsSeleccionats.includes(nouParticipant)) {
-      setParticipantsSeleccionats(prev => [...prev, nouParticipant]);
-      setNouParticipant('');
-    }
-  };
-*/
   const resetForm = () => {
     setName("");
     setParticipants([]);
-    //setNouParticipant('');
   };
 
   const handleSubmit = (e) => {
@@ -71,24 +48,6 @@ export default function ProjectForm({afegirProjecte}) {
 
     resetForm()
   }
-
-/*
-        <label>
-          <span>Participants</span>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3em' }}>
-              {participants.map((participant, index) => (
-                <label key={index}>
-                  <input
-                    type="checkbox"
-                    checked={participants.includes(participant)}
-                    onChange={() => handleChangeCheckbox(participant)}
-                  />
-                  {participant}
-                </label>
-              ))}
-          </div>
-        </label>
-*/
 
   return (
     <div>

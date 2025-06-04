@@ -10,7 +10,6 @@ export default function Projectes() {
 
   const [mostraModal, setMostraModal] = useState(false);
   const { user } = useAuth();
-  //const { documents: projectes } = useCollection('projectes', currentUser?.uid);
   const [projectes, setProjectes] = useState([]);
 
   useEffect(() => {

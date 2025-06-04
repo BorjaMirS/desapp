@@ -5,7 +5,6 @@ import Modal from '../modal/Modal';
 import ParticipantsForm from '../participantsForm/ParticipantsForm';
 import DespesesLlista from '../despesesllista/DespesesLlista';
 import DespesaForm from '../despesaForm/DespesaForm';
-import { useCollection } from '../../hooks/useCollection';
 
 export default function ProjectesDetall() {
     const { id } = useParams();
