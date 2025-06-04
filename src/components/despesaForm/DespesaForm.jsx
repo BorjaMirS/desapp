@@ -7,6 +7,7 @@ export default function DespesaForm({afegirDespesa, projecte}) {
   const [concepte, setConcepte] = useState("")
   const [quantia, setQuantia] = useState("")
   const [pagatPer, setPagatPer] = useState("")
+  const [participantsImplicats, setParticipantsImplicats] = useState([]);
 
   const resetForm = () => {
     setConcepte("")
@@ -21,6 +22,7 @@ export default function DespesaForm({afegirDespesa, projecte}) {
   useEffect(() => {
     if (projecte?.participants?.length > 0) {
       setPagatPer(projecte.participants[0]);
+      setParticipantsImplicats(projecte.participants);
     }
   }, [projecte]);
 
@@ -31,7 +33,8 @@ export default function DespesaForm({afegirDespesa, projecte}) {
       concepte: concepte,
       quantia: quantia,
       pagatPer: pagatPer,
-      projecte: projecte.id 
+      projecte: projecte.id,
+      participants: participantsImplicats 
     }
 
     console.log(despesa)
@@ -40,6 +43,7 @@ export default function DespesaForm({afegirDespesa, projecte}) {
 
     resetForm()
   }
+
 
   return (
     <form className="despesa-form" onSubmit={handleSubmit}>
@@ -61,6 +65,24 @@ export default function DespesaForm({afegirDespesa, projecte}) {
             }
           </select>
         </label>
+      {projecte.participants?.filter(participant => participant !== pagatPer)
+      .map((participant) => (
+        <label key={participant}>
+          <input
+            type="checkbox"
+            value={participant}
+            checked={participantsImplicats.includes(participant)}
+            onChange={() => {
+              setParticipantsImplicats((prev) =>
+                prev.includes(participant)
+                  ? prev.filter((p) => p !== participant)
+                  : [...prev, participant]
+              );
+            }}
+              />
+            {participant}
+          </label>
+          ))}
         <button>Afegir</button>
         <p>CONCEPTE: { concepte } Quantia: {quantia} Pagat per: {pagatPer}</p>
         <p onClick={resetForm}>Restablir els valors inicials</p>
