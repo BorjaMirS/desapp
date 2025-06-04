@@ -2,7 +2,6 @@ import {useState, useEffect} from 'react'
 import Modal from '../../components/modal/Modal';
 import ProjectForm from '../../components/projectForm/ProjectForm';
 import { saveCollection, deleteDocument, getProjectesByPropietari } from '../../firebase/firebase';
-import { useCollection } from '../../hooks/useCollection'
 import ProjectesLlista from '../../components/projectesLlista/ProjectesLlista'
 import { useAuth } from '../../components/authContext/AuthContext';
 
@@ -14,8 +13,8 @@ export default function Projectes() {
   //const { documents: projectes } = useCollection('projectes', currentUser?.uid);
   const [projectes, setProjectes] = useState([]);
 
-    useEffect(() => {
-      console.log("Current user", user);
+  useEffect(() => {
+    console.log("Current user", user);
     if (user) {
       getProjectesByPropietari(user.uid)
         .then(setProjectes)
@@ -33,7 +32,9 @@ export default function Projectes() {
       .then((idProjecte) => {
         console.log("Projecte afegit amb id: ", idProjecte);
         projecte.id = idProjecte;
+        return getProjectesByPropietari(user.uid);
         })
+        .then(setProjectes)
         .catch((error) => {
           console.log("Error afegint projecte: ", error);
         })
@@ -43,17 +44,19 @@ export default function Projectes() {
           setMostraModal(false);
         });
                 
-  }
+    }
 
-        const eliminarProjecte = (id) => {
-          deleteDocument("projectes", id)
-              .then(() => {
+    const eliminarProjecte = (id) => {
+      deleteDocument("projectes", id)
+          .then(() => {
                   console.log(`Projecte amb id ${id} eliminada correctament`);
-              })
-              .catch((error) => {
+                  return getProjectesByPropietari(user.uid);
+          })
+          .then(setProjectes)
+          .catch((error) => {
                   console.error("Error eliminant el projecte:", error);
-              });
-        }
+          });
+    }
 
   return (
     <div>

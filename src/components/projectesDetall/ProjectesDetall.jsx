@@ -10,7 +10,8 @@ import { useCollection } from '../../hooks/useCollection';
 export default function ProjectesDetall() {
     const { id } = useParams();
     const [projecte, setProjecte] = useState(null);
-    const [mostraModal, setMostraModal] = useState(false);
+    const [mostraModalDespeses, setMostraModalDespeses] = useState(false);
+    const [mostraModalParticipants, setMostraModalParticipants] = useState(false);
     const [mostrarDespeses, setMostrarDespeses] = useState(true)
     const { documents: despeses } = useFilteredCollection('despeses','projecte', projecte?.id );
     //const [despeses, setDespeses] = useState(null);
@@ -34,7 +35,8 @@ export default function ProjectesDetall() {
     }
     
   const handleTancar = () => {
-    setMostraModal(false);
+    setMostraModalDespeses(false);
+    setMostraModalParticipants(false);
   }
 
   const handleParticipants = async (participantsActualitzats) => {
@@ -54,7 +56,7 @@ export default function ProjectesDetall() {
                   console.error("Error afegint la despesa:", error);
               })
               .finally(() => {
-                  setMostraModal(false); // Tanca el modal, independentment del resultat
+                  setMostraModalDespeses(false); // Tanca el modal, independentment del resultat
               });
          };
   
@@ -84,9 +86,9 @@ export default function ProjectesDetall() {
                  (<li>No hi ha participants</li>)
             }
         </ol>
-        <button onClick={() => setMostraModal(true)}>Gestionar participants</button>
+        <button onClick={() => setMostraModalParticipants(true)}>Gestionar participants</button>
         {
-          mostraModal && <Modal handleTancar={handleTancar}>
+          mostraModalParticipants && <Modal handleTancar={handleTancar}>
                             <ParticipantsForm 
                                 projecte={projecte}
                                 handleParticipants={handleParticipants}
@@ -111,12 +113,12 @@ export default function ProjectesDetall() {
             //Index és un atribut per defecte de map
             mostrarDespeses && despeses && <DespesesLlista despeses={despeses} eliminarDespesa={eliminarDespesa}/>
         }
-        { mostraModal && <Modal handleTancar = {handleTancar}>  
+        { mostraModalDespeses && <Modal handleTancar = {handleTancar}>  
                 <DespesaForm afegirDespesa={afegirDespesa} projecte={projecte}/>
             </Modal>  
         }
         <div>
-            <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
+            <button onClick={ () => setMostraModalDespeses(true)}> Afegir despesa </button>
         </div>
         <div>
             <button onClick={() => setFiltrarPerQuantia(true)}>Filtrar</button>
