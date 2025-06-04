@@ -16,8 +16,9 @@ export default function inici() {
 
       const [filtrarPerQuantia, setFiltrarPerQuantia] = useState(false)
       // hook personalitzat const { documents: despeses } = useCollection('despeses')
+      const titol = "Benvinguts a l'app de despeses!!"
 
-      const subtitol = "React & Firebase!!"
+      const subtitol = "Registra't, crea els teus projectes, afegeix participants i comença a enregistrar despeses!!"
 
       /*
       useEffect(() => {
@@ -68,47 +69,14 @@ export default function inici() {
                 console.error("Error eliminant la despesa:", error);
             });
       }
-
-      const handleClick = (id) => {
-        // console.log(id)
-        //setDespeses(despeses.filter((despesa) => id !== despesa.id))
-        setDespeses((despesesPrevies) => {
-          return despesesPrevies.filter((despesa) => id !== despesa.id)
-        })
-      }
-    
+ 
       const handleTancar = () => {
         setMostraModal(false)
       }
 
   return (
     <div>
-            <h1>Inici</h1>
-             {  !mostrarDespeses && 
-               (
-                  <div>
-                    <button onClick={ () => setMostrarDespeses(true)}>Mostrar Despeses</button>
-                  </div>
-                )
-             } 
-             {  mostrarDespeses && 
-               (
-                  <div>
-                    <button onClick={ () => setMostrarDespeses(false)}>Ocultar Despeses</button>
-                  </div>
-                )
-             } 
-                   <Titol titol="Benvinguts al curs!!" subtitol={subtitol} />
-            { 
-            //Index és un atribut per defecte de map
-                despeses && <DespesesLlista despeses={despeses} eliminarDespesa={eliminarDespesa}/>
-            }
-            { mostraModal && <Modal handleTancar = {handleTancar}>  
-                <DespesaForm afegirDespesa={afegirDespesa}/>
-            </Modal>  }
-            <div>
-                <button onClick={ () => setMostraModal(true)}> Afegir despesa </button>
-            </div>
+            <Titol titol={titol} subtitol={subtitol}/>
             <div>
                 <button onClick={() => setFiltrarPerQuantia(true)}>Filtrar</button>
             </div>

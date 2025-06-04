@@ -1,7 +1,8 @@
  // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { useState, useEffect } from "react";
 
  // TODO: Add SDKs for Firebase products that you want to use
  // https://firebase.google.com/docs/web/setup#available-libraries
@@ -31,6 +32,17 @@ export const saveDespesa = async (despesa) => {
 
     return docRef.id;
 
+ }
+
+ export const updateParticipants = async (idProjecte, participants) => {
+      try {
+      await updateDoc(doc(db, "projectes", idProjecte), {
+        participants: participants
+      });
+      console.log("Participants actualitzats");
+    } catch (error) {
+      console.error("Error actualitzant participants: ", error);
+    }
  }
 
  export const saveCollection = async (collectionName, item) => {
@@ -66,6 +78,9 @@ export const saveDespesa = async (despesa) => {
   } 
  }
 
+ export const OnGetDocument = (id, collectionName, callback) => 
+    onSnapshot(doc(db, collectionName, id), callback);
+
  export const OnGetDespesa = (id, callback) => 
   onSnapshot(doc(db, "despeses", id), callback);
 
@@ -94,6 +109,43 @@ export const logoutUser = async () => {
 }
  
 //Crear mètode per comprovar si tenim usuari logejat: onAuthStateChanged
-export const isUserLoggedIn = async (user) => 
-  await onAuthStateChanged(auth, user);
+export const isUserLoggedIn =  (user) => 
+   onAuthStateChanged(auth, user);
 
+export const getProjectesByPropietari = async (userId) => {
+  try {
+    const projectesRef = collection(db, "projectes");
+    const q = query(projectesRef, where("idpropietari", "==", userId));
+    const snapshot = await getDocs(q);
+
+    const projectes = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    return projectes;
+
+  } catch (error) {
+    console.error("Error obtenint projectes per propietari:", error);
+    return [];
+  }
+}
+
+export function useFilteredCollection(collectionName, field, value) {
+  const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    if (!value) return;
+
+    const q = query(collection(db, collectionName), where(field, "==", value));
+
+    const unsubscribe = onSnapshot(q, snapshot => {
+      const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setDocuments(docs);
+    });
+
+    return () => unsubscribe();
+  }, [collectionName, field, value]);
+
+  return { documents };
+}

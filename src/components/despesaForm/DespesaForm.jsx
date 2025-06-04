@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './DespesaForm.css'
 
 
-export default function DespesaForm({afegirDespesa}) {
+export default function DespesaForm({afegirDespesa, projecte}) {
 
   const [concepte, setConcepte] = useState("")
   const [quantia, setQuantia] = useState("")
-  const [pagatPer, setPagatPer] = useState("joan")
+  const [pagatPer, setPagatPer] = useState("")
 
   const resetForm = () => {
     setConcepte("")
@@ -18,6 +18,12 @@ export default function DespesaForm({afegirDespesa}) {
     console.log(e.target.value)
   }; 
 
+  useEffect(() => {
+    if (projecte?.participants?.length > 0) {
+      setPagatPer(projecte.participants[0]);
+    }
+  }, [projecte]);
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -25,7 +31,7 @@ export default function DespesaForm({afegirDespesa}) {
       concepte: concepte,
       quantia: quantia,
       pagatPer: pagatPer,
-     // id: Math.floor(Math.random()*1000)
+      projecte: projecte.id 
     }
 
     console.log(despesa)
@@ -46,13 +52,14 @@ export default function DespesaForm({afegirDespesa}) {
             <input type="text" onChange={(e) => setQuantia(e.target.value)} value={quantia}/>          
         </label>
         <label>
-            <span>Pagat per</span>  
-            <select onChange={(e) => {setPagatPer(e.target.value)}}>
-              <option value="joan">Joan</option>
-              <option value="borja">Borja</option>
-              <option value="david">David</option>
-              <option value="pere">Pere</option>
-            </select>
+          <span>Pagat per</span>  
+          <select value={pagatPer} onChange={(e) => setPagatPer(e.target.value)}>
+            {
+              projecte.participants.map((participant, index) => (
+                <option key={index} value={participant}>{participant}</option>
+              ))
+            }
+          </select>
         </label>
         <button>Afegir</button>
         <p>CONCEPTE: { concepte } Quantia: {quantia} Pagat per: {pagatPer}</p>

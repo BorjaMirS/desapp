@@ -1,38 +1,94 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './ProjectForm.css'
-import { saveCollection } from '../../firebase/firebase';
-
+import { useAuth } from '../../components/authContext/AuthContext';
+import { onGetCollection, OnGetDocument } from '../../firebase/firebase';
 
 export default function ProjectForm({afegirProjecte}) {
 
   const [name, setName] = useState("")
-  const [quantia, setQuantia] = useState("")
-  const [pagatPer, setPagatPer] = useState("")
-  const [participants, setParticipants] = useState(null)
+  const [participants, setParticipants] = useState([])
+  const [error, setError] = useState('');
+  const { user } = useAuth();
+  const [userName, setUserName] = useState('');
+  //const [nouParticipant, setNouParticipant] = useState('');
 
+/*
+  useEffect(() => {
+    if (user) {
+      
+      const unsubscribe = OnGetDocument(user.uid, "usuaris", (usuari) => {
+          if (usuari) {
+            setUserName(usuari.data());
+            console.log("Nom d'usuari: ", usuari.data());
+          }
+      })
+    }
+  }, [user]);
+*/
+
+  // Carrega usuaris des de Firebase
+  useEffect(() => {
+    const unsubscribe = onGetCollection("usuaris", (snapshot) => {
+      const noms = snapshot.docs.map(doc => doc.data().nom);
+      setParticipants(noms);
+      console.log("ProjectForm participants: ", participants);
+    });
+
+    console.log("Participants: ", participants);
+    return () => unsubscribe();
+  }, []);
+
+/*  const afegirNouParticipant = () => {
+    if (nouParticipant && !participantsSeleccionats.includes(nouParticipant)) {
+      setParticipantsSeleccionats(prev => [...prev, nouParticipant]);
+      setNouParticipant('');
+    }
+  };
+*/
   const resetForm = () => {
-    setName("")
-    setQuantia("")
-    setPagatPer("")
-  }
-
-  const handleChange = (e) => {
-    console.log(e.target.value)
-  }; 
+    setName("");
+    setParticipants([]);
+    //setNouParticipant('');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const projecte = {
+    if (user) {
+      console.log(`Usuari: ${user}`);
+      const projecte = {
         nom: name,
-        participants: ["pepe", "tomeu"]
+        idpropietari:user.uid,
+        participants: ["bb", "aa"]
+      }
+
+      afegirProjecte(projecte);
+      console.log("Afegir projecte ", projecte);
+    } else {
+      setError("Un usuari no autenticat no pot crear projectes");
     }
 
-    afegirProjecte(projecte);
 
     resetForm()
   }
 
+/*
+        <label>
+          <span>Participants</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3em' }}>
+              {participants.map((participant, index) => (
+                <label key={index}>
+                  <input
+                    type="checkbox"
+                    checked={participants.includes(participant)}
+                    onChange={() => handleChangeCheckbox(participant)}
+                  />
+                  {participant}
+                </label>
+              ))}
+          </div>
+        </label>
+*/
 
   return (
     <div>
@@ -41,15 +97,7 @@ export default function ProjectForm({afegirProjecte}) {
                 <span>Nom del projecte</span>  
                 <input type="text" onChange={(e) => setName(e.target.value)} value={name}/>          
             </label>
-            <label>
-                <span>Participants</span>  
-                <select onChange={(e) => {setPagatPer(e.target.value)}}>
-                <option value="joan">Joan</option>
-                <option value="borja">Borja</option>
-                <option value="david">David</option>
-                <option value="pere">Pere</option>
-                </select>
-            </label>
+            {error && <p style={{ color: 'red'}}> {error} </p>}
             <button>Crear</button>
             <button onClick={resetForm}>Restablir els valors inicials</button>
         </form>

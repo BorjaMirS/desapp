@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './RegisterForm.css'
 import { registerUser, saveCollection } from '../../firebase/firebase';
+import { updateProfile } from 'firebase/auth';
 
 export default function RegisterForm() {
 
@@ -25,7 +26,7 @@ export default function RegisterForm() {
         setError("");
 
         if (res.code == undefined) {
-            saveCollection("participants", {uid: res.user.uid, email, name})
+            saveCollection("usuaris", {uid: res.user.uid, email, name})
                 .then((user) => {
                     console.log(user);
                     console.log("Nom: ",name);
